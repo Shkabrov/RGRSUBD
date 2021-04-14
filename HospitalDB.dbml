@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Hospital" Class="HospitalDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-NCNMBUV\SQLEXPRESS;Initial Catalog=Hospital;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HospitalConnection" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Department" Member="Department">
+    <Type Name="Department">
+      <Column Name="dap_Department" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="dap_Ward_number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Wards_Department" Member="Wards" ThisKey="dap_Ward_number" OtherKey="w_Ward_number" Type="Wards" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Doctors" Member="Doctors">
+    <Type Name="Doctors">
+      <Column Name="d_Doctor_FIO" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="d_Specialization" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="d_Salary" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Doctors_Maps" Member="Maps" ThisKey="d_Doctor_FIO" OtherKey="m_Doctor_FIO" Type="Maps" />
+      <Association Name="Doctors_Wards" Member="Wards" ThisKey="d_Doctor_FIO" OtherKey="w_Doctor_FIO" Type="Wards" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Maps" Member="Maps">
+    <Type Name="Maps">
+      <Column Name="m_Map" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="m_Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_Doctor_FIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_Diagnosis" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_Age" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_Adress" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="m_Profession" Type="System.String" DbType="VarChar(70)" CanBeNull="true" />
+      <Column Name="m_Place_work" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="m_Phone_number" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="m_Characteristic" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="m_Ward_number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Doctors_Maps" Member="Doctors" ThisKey="m_Doctor_FIO" OtherKey="d_Doctor_FIO" Type="Doctors" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Wards_Maps" Member="Wards" ThisKey="m_Ward_number" OtherKey="w_Ward_number" Type="Wards" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Wards" Member="Wards">
+    <Type Name="Wards">
+      <Column Name="w_Ward_number" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="w_Number_beds" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="w_Doctor_FIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="w_Staff" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Wards_Department" Member="Department" ThisKey="w_Ward_number" OtherKey="dap_Ward_number" Type="Department" />
+      <Association Name="Wards_Maps" Member="Maps" ThisKey="w_Ward_number" OtherKey="m_Ward_number" Type="Maps" />
+      <Association Name="Doctors_Wards" Member="Doctors" ThisKey="w_Doctor_FIO" OtherKey="d_Doctor_FIO" Type="Doctors" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>
